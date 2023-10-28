@@ -11,6 +11,9 @@ const getEntry = async (journalId) => {
                 userId: user.id,
                 id: journalId
             }
+        },
+        include: {
+            analysis: true
         }
 
     })
@@ -19,12 +22,13 @@ const getEntry = async (journalId) => {
 }
 
 const JournalEditorPage = async ({ params }) => {
-    const entry = await getEntry(params.id)
+    const {summary,subject,sentiment,negative,color} = await getEntry(params.id)
     const analysisData = [
-        {'name':'Summary', 'value':''},
-        {'name':'Subject', 'value':''},
-        {'name':'Sentiment', 'value':''},
-        {'name':'Negative', 'value':'False'},
+        {'name':'Summary', 'value':summary},
+        {'name':'Subject', 'value':subject},
+        {'name':'Sentiment', 'value':sentiment},
+        {'name':'Negative', 'value':negative},
+        {'name':'Color', 'value':color},
     ]
     return (
         <div className='grid grid-cols-3'>
@@ -33,7 +37,7 @@ const JournalEditorPage = async ({ params }) => {
             </div>
             <div className='col-span-1'>
                 <div className='border-l border-black/10 '>
-                    <div className='px-6 py-8 bg-blue-300'>
+                    <div className='px-6 py-8' style={{backgroundColor : color}}>
                         <h2 className='text-2xl font-bold'>Analysis</h2>
                     </div>
                     <ul className=''>

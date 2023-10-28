@@ -3,6 +3,7 @@ import getUserByClerkId from "@/utils/auth";
 import CreateEntry from "@/components/NewEntryCard";
 import EntryCard from "@/components/EntryCard";
 import Link from 'next/link'
+import { analyze } from "@/utils/ai";
 
 const getEntries = async () => {
     const user = await getUserByClerkId()
@@ -15,6 +16,8 @@ const getEntries = async () => {
             createdAt: 'desc'
         }
     })
+
+    // await analyze('recommend a 7 day diet for me. I am planning working out in the gym to build muscles, 4 days a week')
 
     return entries
 }

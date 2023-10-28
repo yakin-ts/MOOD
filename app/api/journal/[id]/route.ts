@@ -1,6 +1,7 @@
 import getUserByClerkId from "@/utils/auth";
 import { prisma } from "@/utils/db";
 import { NextResponse } from "next/server";
+import { analyze} from '@/utils/ai'
 
 export const PATCH = async (req: Request, {params}) => {
 
@@ -17,6 +18,17 @@ export const PATCH = async (req: Request, {params}) => {
         data: {
             content
         }
+})
+
+const analysis = await analyze(journalUpdated)
+// diff between upsert and update
+await prisma.analysis.update({
+    where: {
+        entryId: journalUpdated.id
+    },
+    data: {
+        ...analysis
+    }
 })
 
     return NextResponse.json({data: journalUpdated})
