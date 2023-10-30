@@ -1,6 +1,10 @@
 import { OpenAI} from 'langchain/llms/openai'
 import { StructuredOutputParser } from "langchain/output_parsers"
-import { PromptTemplate } from "langchain/prompts";
+import { PromptTemplate } from "langchain/prompts"
+import  {Document} from 'langchain/document'
+import  { loadQARefineChain} from 'langchain/chains'
+import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
+import  { MemoryVectorStore} from 'langchain/vectorstores/memory'
 import z from 'zod'
 
 const parser = StructuredOutputParser.fromZodSchema(
@@ -35,7 +39,7 @@ const getPrompt = async (content) => {
     {format_instructions} \n
     {entry}`,
         inputVariables: ["entry"],
-        partialVariables: { format_instructions },
+        partialVariables: { formatted_instruction },
       });
     
 
@@ -57,5 +61,33 @@ export const analyze  = async (content) => {
     catch {
       
 }
+
+}
+
+
+
+export const qa =  async(question,entries) => {
+
+  const docs = entries.map(entry => {
+    return new Document({
+      pageContent: entry.content,
+      metadata : {
+        id: entry.id,
+        createdAt: entry.createdAt,
+      }
+    })
+  })
+
+  const model = new OpenAI({temperature:0, modelName: process.env.OPENAI_MODEL_NAME})
+  const chain = loadQARefineChain(model)
+  const embeddings = new OpenAIEmbeddings()
+  const store = await MemoryVectorStore.fromDocuments(docs, embeddings)
+  const relevantDocs = await store.similaritySearch(question)
+  const res = await chain.call({
+    input_documents: relevantDocs,
+    question,
+  })
+
+  return res.output_text
 
 }

@@ -29,3 +29,18 @@ export const createNewJournal = async() => {
     }
 }
 
+export const askQuestion = async (question) => {
+    const res = await fetch(
+        new Request(createURL('/api/search'),{
+            method: 'POST',
+            body: JSON.stringify({question})
+        })
+    )
+
+    if (res.ok) {
+        const data = await res.json()
+        return data.data
+    }
+    
+}
+
