@@ -5,26 +5,27 @@ import { ReactNode } from 'react';
 
 
 type DashboardLayoutProps = {
-    children: ReactNode;
+  children: ReactNode;
 };
 
 const links = [
-    { name: 'Journals', href: '/journal' },
-    { name: 'History', href: '/history' },
-  ]
+  { label: 'Home', href: '/' },
+  { label: 'Journals', href: '/journal' },
+  { label: 'History', href: '/history' },
+]
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
-    return (
-        <div className="w-screen h-screen relative">
+  return (
+    <div className="w-screen h-screen relative">
       <aside className="absolute left-0 top-0 h-full w-[200px] border-r border-black/10">
         <div className="px-4 my-4">
-          <span className="text-3xl">SENTIA</span>
+          <span className="text-3xl">MOOD</span>
         </div>
         <div>
-          <ul className="px-4">
+          <ul className="px-4 py-4">
             {links.map((link) => (
-              <li key={link.name} className="text-xl my-4">
-                <Link href={link.href}>{link.name}</Link>
+              <li key={link.label} className="text-xl my-4">
+                <Link href={link.href}>{link.label}</Link>
               </li>
             ))}
           </ul>
@@ -41,7 +42,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className="h-[calc(100vh-60px)]">{children}</div>
       </div>
     </div>
-    );
+  );
 };
 
 export default DashboardLayout;

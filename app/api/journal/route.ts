@@ -17,12 +17,13 @@ export const POST = async (reques: Request) => {
 
     await prisma.journalEntry.create({
         data: {
-            entryId: journal.id,
+            id: journal.id,
             ...analysis
         }
     })
 
+
     revalidatePath('/journal')
 
-    return NextResponse.json({data: journal})
+    return NextResponse.json({data: {...journal, analysis: {...analysis}}})
 }

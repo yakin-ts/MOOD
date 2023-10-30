@@ -26,6 +26,7 @@ const parser = StructuredOutputParser.fromZodSchema(
 
 // promt template
 
+
 const getPrompt = async (content) => {
     const formatted_instruction = parser.getFormatInstructions()
     const prompt = new PromptTemplate({
@@ -46,8 +47,15 @@ const getPrompt = async (content) => {
 
 export const analyze  = async (content) => {
     const prompt = await getPrompt(content)
-    const model = new OpenAI({temperature:0, modelName:'davinci'})
+    const model = new OpenAI({temperature:0, modelName: process.env.OPENAI_MODEL_NAME})
     const result = await model.call(prompt)
     
-    return result
+    try {
+        const output = parser.parse(result)
+        return output
+    } 
+    catch {
+      
+}
+
 }
