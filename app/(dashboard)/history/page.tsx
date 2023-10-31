@@ -1,6 +1,6 @@
 import getUserByClerkId from "@/utils/auth"
 import { prisma } from "@/utils/db"
-import { HistoryCharts } from "@/components/HistoryCharts"
+import HistoryCharts  from "@/components/HistoryChart"
 
 const getData = async () => {
     const user = await getUserByClerkId()
