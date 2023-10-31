@@ -5,6 +5,7 @@ import  {Document} from 'langchain/document'
 import  { loadQARefineChain} from 'langchain/chains'
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
 import  { MemoryVectorStore} from 'langchain/vectorstores/memory'
+import { QuestionEntry } from '@/types/question'
 import z from 'zod'
 
 const parser = StructuredOutputParser.fromZodSchema(
@@ -31,7 +32,7 @@ const parser = StructuredOutputParser.fromZodSchema(
 // promt template
 
 
-const getPrompt = async (content) => {
+const getPrompt = async (content: string) => {
     const formatted_instruction = parser.getFormatInstructions()
     const prompt = new PromptTemplate({
         template: `Analyze the following journal entry. Follow the instructions and format your \
@@ -49,7 +50,7 @@ const getPrompt = async (content) => {
 
 }
 
-export const analyze  = async (content) => {
+export const analyze  = async (content: string) => {
     const prompt = await getPrompt(content)
     const model = new OpenAI({temperature:0, modelName: process.env.OPENAI_MODEL_NAME})
     const result = await model.call(prompt)
@@ -66,7 +67,7 @@ export const analyze  = async (content) => {
 
 
 
-export const qa =  async(question,entries) => {
+export const qa =  async(question: string ,entries: QuestionEntry[]) => {
 
   const docs = entries.map(entry => {
     return new Document({
