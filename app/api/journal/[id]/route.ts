@@ -4,7 +4,14 @@ import { NextResponse } from "next/server";
 import { analyze } from "@/utils/ai";
 import {JournalEntry,Analysis,User} from '@prisma/client'
 
-export const PATCH = async (req: Request, { params }) => {
+
+interface Props {
+  params: {
+    id: string
+  }
+}
+
+export const PATCH = async (req: Request, { params }: Props) => {
   const user = await getUserByClerkId();
   const { content } = await req.json();
 
