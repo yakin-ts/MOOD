@@ -66,13 +66,9 @@ To get Mood up and running, follow these steps:
 4. Use the question-based search feature to explore your journal in new ways.
 5. Access the sentiment history chart to visualize your emotional journey.
 
-For detailed usage instructions, visit our [User Guide](/docs/user-guide.md).
 
-## Demo
 
-You can experience Mood live by visiting our [Demo](https://moodapp.example.com).
 
-![Mood App Demo](demo.gif)
 
 ## Contributing
 
