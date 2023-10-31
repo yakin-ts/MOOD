@@ -29,6 +29,11 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "prisma": "^5.5.2"
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.0.0",
+    "@vitejs/plugin-react-swc": "^3.4.1",
+    "jsdom": "^22.1.0",
+    "prisma": "^5.5.2",
+    "vitest": "^0.34.6"
   }
 }
