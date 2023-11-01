@@ -10,8 +10,7 @@ Mood is an AI-driven journaling web app designed to help users track their senti
 4. [Installation](#installation)
 5. [Usage](#usage)
 6. [Contributing](#contributing)
-7. [License](#license)
-8. [Contact](#contact)
+7. [Contact](#contact)
 
 ## Introduction
 
@@ -27,7 +26,7 @@ Mood is more than just a journaling platform; it's your personal mood tracker. I
 
 - **Question-Based Search:** Want to explore specific themes or thoughts across your entire journal? Ask a question, and Mood will perform a similarity search on the in-memory vector DB and  respond to your query.
 
-- **Autosave and Sync:** Your entries are automatically saved and synchronized with the database as you write, ensuring that your precious journal content is always secure.
+- **Autosave and Sync:** Your entries are automatically saved and synchronized with the database as you write, ensuring that your journal content is always secure.
 
 
 
@@ -79,9 +78,7 @@ Contributions from the community to make Mood even better are welcome. To get st
 3. Make your changes and commit them.
 4. Push to your fork and submit a pull request.
 
-## License
-
-Mood is open-source software licensed under the [MIT License](/LICENSE.md).
+P.S: Mood is still a work in progress and I will be improving features.
 
 ## Contact
 
