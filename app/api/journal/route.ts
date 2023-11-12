@@ -1,30 +1,37 @@
-import getUserByClerkId  from '@/utils/auth'
-import { prisma } from '@/utils/db'
-import { revalidatePath } from 'next/cache'
-import { NextResponse } from 'next/server'
-import { analyze} from '@/utils/ai'
+import getUserByClerkId from "@/utils/auth";
+import { prisma } from "@/utils/db";
+import { revalidatePath } from "next/cache";
+import { NextResponse } from "next/server";
 
 export const POST = async (reques: Request) => {
-    const user = await getUserByClerkId()
-    const journal = await prisma.journalEntry.create({
-        data: {
-            userId: user.id,
-            content: 'Write about your day !!'
-        }
-    })
+  const user = await getUserByClerkId();
+  const journal = await prisma.journalEntry.create({
+    data: {
+      content: "Write about your day !!",
 
-    const analysis = await analyze(journal)
+      user: {
+        connect: {
+          id: user.id,
+        },
+      },
+      entryAnalysis: {
+        create: {
+          sentiment: "Neutral",
+          subject: "None",
+          negative: false,
+          summary: "None",
+          sentimentScore: 0,
+          color: "#0101fe",
+          userId: user.id,
+        },
+      },
+    },
+  });
 
-    await prisma.analysis.create({
-        data: {
-            userId: journal.id,
-            entryId: journal.id,
-            ...analysis
-        }
-    })
+ 
+  revalidatePath("/journal");
 
-
-    revalidatePath('/journal')
-
-    return NextResponse.json({data: {...journal, analysis: {...analysis}}})
-}
+  return NextResponse.json({
+    data: { ...journal },
+  });
+};

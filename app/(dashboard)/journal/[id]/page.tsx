@@ -6,19 +6,19 @@ import { FunctionComponent } from "react";
 const getEntry = async (journalId: string) => {
     const user = await getUserByClerkId()
 
-    const entry = await prisma.journalEntry.findUnique({
+    const entry = await prisma.journalEntry.findUniqueOrThrow({
         where: {
             userId_id: {
                 userId: user.id,
                 id: journalId
             }
         },
-        include: {
+        select: {
+            id: true,
+            content: true,
             entryAnalysis: true
-        }
-
+        },
     })
-
     return entry
 }
 
@@ -30,7 +30,7 @@ const JournalEditorPage: FunctionComponent<Props> = async ({ params }) => {
     const entry = await getEntry(params.id)
 
     return (
-        <div className='grid grid-cols-3'>
+        <div className='flex flex-row h-full w-full mt-2'>
             <JournalEditor entry={entry} />
         </div>
     )
