@@ -45,12 +45,12 @@ model Analysis {
   userId String
   user   User @relation(fields: [userId], references: [id])
 
-  sentiment String
-  sentimentScore Float @default(0)
+  sentiment String @db.Text
+  sentimentScore Float @default(0.0)
   summary   String  @db.Text
-  color     String
+  color     String @db.Text 
   negative  Boolean
-  subject  String
+  subject  String @db.Text
 
   @@unique([entryId])
   @@index([userId])

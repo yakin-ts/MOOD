@@ -34,16 +34,28 @@ export const PATCH = async (req: Request, { params }: Props) => {
       entryId: journalUpdated.id,
     },
     create: {
-      userId: user.id,
       entryId: journalUpdated.id,
-      ...analysis,
+      userId: user.id,
+      sentiment: analysis?.sentiment || 'neutral',
+      summary: analysis?.summary || '',
+      subject: analysis?.subject || '',
+      negative: analysis?.negative || false,
+      color: analysis?.color || '',
+      sentimentScore: analysis?.sentimentScore || 0,
     },
     update: {
-      ...analysis,
+      sentiment: analysis?.sentiment || 'neutral',
+      summary: analysis?.summary || '',
+      subject: analysis?.subject,
+      negative: analysis?.negative,
+      color: analysis?.color,
+      sentimentScore: analysis?.sentimentScore,
     },
+     
   });
+    
 
   return NextResponse.json({
-    data: { ...journalUpdated, analysis: { ...updatedAnalysis } },
+    data: { ...journalUpdated, entryAnalysis: { ...updatedAnalysis } },
   });
 };

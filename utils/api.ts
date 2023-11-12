@@ -25,6 +25,7 @@ export const createNewJournal = async() => {
 
     if (res.ok) {
         const data = await res.json()
+        console.log(data)
         return data.data
     }
 }

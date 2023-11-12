@@ -8,9 +8,7 @@ const getData = async () => {
         where: {
             userId: user.id
         },
-        select: {
-            sentimentScore: true
-        }
+       
     })
 
     const sum = analysis.reduce((acc, curr) => acc + curr.sentimentScore, 0)
@@ -22,15 +20,16 @@ const getData = async () => {
 const HistoryPage = async () => {
     const { analysis, avg } = await getData()
     return (
-        < div className="h-full px-6 py-8" >
+        < div className="h-full px-6 pt-4 shadow-lg f" >
             <div>
-                <div className='text-2xl mb-4'>{`Avg. Sentiment Score:${avg}`}</div>
+                <div className='text-2xl text-black/60 mb-4 text-center'>{`Average Sentiment Score: ${avg}`}</div>
             </div>
-            <div className='h-full w-full'>
+            <div className='h-full w-full flex items-center justify-center'>
                 <HistoryCharts data={analysis} />
             </div>
         </div >
     )
 }
+
 
 export default HistoryPage
